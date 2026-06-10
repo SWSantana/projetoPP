@@ -1,0 +1,232 @@
+    <!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Estoque Feira - Gestão</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /* Reset básico e cor de fundo */
+            body { 
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                background-color: #112340; 
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            h1 { color: #ffffff; margin-bottom: 20px; }
+
+            /* Menu de Navegação */
+            .menu-nav { 
+                margin-bottom: 20px; 
+                padding: 15px; 
+                background: #fff; 
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .menu-nav a { text-decoration: none; color: #007bff; font-weight: bold; }
+            .menu-nav a:hover { color: #0056b3; }
+            
+            form {
+                display: flex;
+                flex-direction: row;
+                gap: 30px;
+                align-items: flex-start;
+                justify-content: center;
+                width: 100%;
+            }
+            /* une os dois formularios*/
+            .forms-wrapper {
+                display: flex;
+                flex-direction: row;
+                gap: 30px;
+                align-items: flex-start;
+                justify-content: center;
+                width: 100%;
+                flex-wrap: nowrap;
+            }
+
+            /* Containers dos Formulários */
+            .form-container {
+                background: #fff;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                width: 100%;
+                max-width: 400px;
+                flex: 1;
+            }
+            
+            .checkbox-linha {
+                display: flex;
+                flex-direction: row; /* Coloca os itens lado a lado */
+                align-items: center; /* Centraliza a caixinha verticalmente com o texto */
+                gap: 10px; /* Define o espaço entre o texto e a caixa */
+                cursor: pointer; /* Deixa o mouse com a "mãozinha" indicando que é clicável */
+                font-weight: normal; /* Opcional: ajusta o peso da fonte se as outras labels forem em negrito */
+            }
+
+
+            .checkbox-linha input[type="checkbox"] {
+                width: auto; /* Impede que a caixa tente ocupar 100% da largura */
+                margin: 0; /* Remove margens indesejadas */
+            }
+            
+
+            label { 
+                display: block; 
+                margin-bottom: 5px; 
+                color: #666; 
+                font-size: 0.9em;
+                font-weight: bold;
+            }
+
+            input { 
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px; 
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box; /* Garante que o padding não aumente a largura */
+            }
+
+            /* Botões */
+            .acoes { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px; 
+            }
+
+            button {
+                padding: 12px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background 0.3s;
+            }
+
+            button[value="Cadastra"] { background-color: #17a2b8; color: white; }
+            button[value="Edita"] { background-color: #17a2b8; color: white; }
+            button[value="Deleta"] { background-color: #17a2b8; color: white; }
+            button[value="ConsultaById"] { background-color: #17a2b8; color: white; }
+            button[value="ConsultaTodos"] { 
+                background-color: #6c757d; 
+                color: white; 
+                width: 100%; 
+                margin-top: 10px; 
+            }
+
+            button:hover { opacity: 0.85; }
+        </style>
+    </head>
+    <body>
+        <h1>Estoque Feira</h1>
+        
+        <nav class="menu-nav">
+            <strong>Gestão de Produtos</strong> |
+            <a href="controller?btnop=AbrirMOV">Nova Movimentação</a>
+            |
+            <a href="controller?btnop=ConsultarMOV">Histórico Geral</a>
+        </nav>
+        <div class="forms-wrapper">
+            <form action="controller" method="GET">
+            <!-- Formulário principal -->
+                <div class="form-container">
+
+                        <label>ID do Produto:</label>
+                        <input type="number" name="idProduto" placeholder="Ex: 10">
+
+                        <label>Nome:</label>
+                        <input type="text" name="descricaoProduto" placeholder="Ex: Batata Doce">
+
+                        <label>Categoria:</label>
+                        <input type="text" name="categoriaProduto" placeholder="Ex: Legumes">
+
+                        <label>Preco do lote:</label>
+                        <input type="text" name="precoLote" placeholder="Em R$..">
+
+                        <label>Quantidade mínima:</label>
+                        <input type="number" name="quantidadeMinima" placeholder="Ex: 5"> 
+
+                        <label>Quantidade do lote:</label>
+                        <input type="number" name = "quantidadeLote" placeholder = "Ex: 7">
+
+                        <label>Data de validade:</label>
+                        <input type="Date" name="dataValidade">  
+
+                        <div class="acoes">
+                            <button type="submit" name="btnop" value="Cadastra">CADASTRAR</button>
+                            <button type="submit" name="btnop" value="Edita">EDITAR</button>
+                            <button type="submit" name="btnop" value="Deleta" onclick="return confirm('Excluir este produto e seus lotes?')">DELETAR PELO ID</button>
+                            <button type="submit" name="btnop" value="ConsultaById">BUSCAR</button>
+                        </div>
+
+                        <button type="submit" name="btnop" value="ConsultaTodos">LISTAR TUDO</button>
+                </div>                
+            
+            <!-- Formulário de notificações -->
+                <div class="form-container">                    
+                    <h2>Escolha de meios de mensagem: </h2>
+                    <label>E-mail:</label>
+                    <input type="text" name="email" placeholder="Ex: exemplo@email.com">
+
+
+                    <strong> Formas opcionais de notificação: </strong>
+                    <label class = "checkbox-linha">
+                        Whatsapp:
+                        <input type="checkbox" name = "whatsapp">
+                        SMS:
+                        <input type="checkbox" name = "SMS">
+                        Telegram:
+                        <input type="checkbox" name = "telegram">                        
+                    </label> 
+                    <input type="text" name="numero" placeholder="Ex: 11 9 97178999" >
+                    
+                </div>
+            </form>
+        </div>
+        <script>
+
+            const urlParams = new URLSearchParams(window.location.search);
+        
+            if (urlParams.has('cadastrado')) {
+                let mensagemAlerta = "Produto cadastrado com sucesso!";
+
+                // Se tiver o parâmetro notificação, junta ele na mensagem do alerta
+                if (urlParams.has('notificacao')) {
+                    mensagemAlerta += "\n\nStatus de Notificações:\n" + urlParams.get('notificacao');
+                }
+
+                alert(mensagemAlerta);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
+            // Verifica se existe o parâmetro 'excluido'
+            if (urlParams.has('excluido')) {
+                alert("Produto removido com sucesso!");
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            // Verifica se existe o parâmetro 'editado'
+            if (urlParams.has('editado')) {
+                alert("Produto editado com sucesso!");
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            if (urlParams.has('movimentado')) {
+                alert("Movimentação efetuada com sucesso!");
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            
+        </script>        
+    </body>
+</html>
